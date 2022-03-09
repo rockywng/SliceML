@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<link rel="icon" type="image/x-icon" href="/static/redfavicon.ico">
+		<title>Slice</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	</head>
+	<div id="loading" style="display:none;">
+		<img src="/static/newroll.gif" alt="" id="loadingpic"/>
+		<p>Loading...</p>
+	</div>
+	<!--<div id="loading" style="display:none;"><img src="/static/loading.gif" alt=""/></div>-->
+	<body class="is-preload">
+		<!-- Header -->
+			<header id="header">
+				<h1><img src = "static/cleanslice.png" width = "20%" height = "50%"/></h1>
+				<p>Sentiment analysis for your professional needs.<br>Enter a valid YouTube video link below to receive your video feedback. </p>
+			</header>
+
+		<!-- Signup Form -->
+			<form id="signup-form" action="{{url_for('predict')}}" method="post" >
+				<input type="text" name="entry" id="entry" placeholder="YouTube Video Link" />
+				<input type="submit" id = "button" value="Submit" onclick="$('#loading').show();"/>
+			</form>
+			<div class ="pred">
+				<p class = "result">{{ prediction_text }}</p>
+			</div>
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>&copy; Slice</li><li> <a href="https://www.linkedin.com/in/rocky-wang-55638b174/">Rocky Wang</a></li>
+				</ul>
+			</footer>
+	</div>
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	</body>
+</html>
