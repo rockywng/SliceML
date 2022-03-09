@@ -17,8 +17,8 @@ import numpy as np
 import requests
 
 app = Flask(__name__)
-model = pickle.load(open("models/comment_classifier.sav", "rb"))
-vectorizer = pickle.load(open("models/vectorizer.sav", "rb"))
+model = pickle.load(open("models/comment_classifier3.sav", "rb"))
+vectorizer = pickle.load(open("models/vectorizer3.sav", "rb"))
 
 pattern = '"playabilityStatus":{"status":"ERROR","reason":"Video unavailable"'
 
@@ -43,7 +43,7 @@ def scrape_predict(link):
         wait = WebDriverWait(driver,15)
         driver.get(str(link))
 
-        for item in range(20): 
+        for item in range(3): 
             wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body"))).send_keys(Keys.END)
             #time.sleep(15)
 
