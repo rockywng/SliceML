@@ -45,7 +45,7 @@ def scrape_predict(link):
 
         for item in range(3): 
             wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body"))).send_keys(Keys.END)
-            #time.sleep(15)
+            time.sleep(15)
 
         for comment in wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#content"))):
             data.append(comment.text)
