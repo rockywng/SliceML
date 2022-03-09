@@ -15,6 +15,7 @@ import re
 import pandas as pd
 import numpy as np
 import requests
+import os
 
 app = Flask(__name__)
 model = pickle.load(open("models/comment_classifier3.sav", "rb"))
@@ -39,7 +40,7 @@ def scrape_predict(link):
     options.add_argument("--no-sandbox")
     options.add_argument("--mute-audio")
     options.add_argument("--disable-gpu")
-    with Chrome(executable_path=r'C:\Program Files\chromedriver.exe', options=options) as driver:
+    with Chrome(executable_path=str(os.environ.get('CHROMEDRIVER_PATH'), options=options) as driver:
         wait = WebDriverWait(driver,15)
         driver.get(str(link))
 
