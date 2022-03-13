@@ -1,4 +1,5 @@
 Flask==2.0.1
+gunicorn==20.0.4
 insta_scrape==2.1.2
 instascrape==0.1
 matplotlib==3.4.3
