@@ -44,7 +44,7 @@ def scrape_predict(link):
         wait = WebDriverWait(driver,15)
         driver.get(str(link))
 
-        for item in range(1): 
+        for item in range(2): 
             wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body"))).send_keys(Keys.END)
             time.sleep(15)
 
@@ -74,9 +74,9 @@ def scrape_predict(link):
             pos += 1
         elif (val[i] == 'N'):
             neg += 1
-    rat = pos/(pos + neg)
     if (pos + neg == 0):
         return 0
+    rat = pos/(pos + neg)
     print(rat)
     print(neg)
     return rat
