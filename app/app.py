@@ -18,8 +18,8 @@ import requests
 import os
 
 app = Flask(__name__)
-model = pickle.load(open("models/comment_classifier3.sav", "rb"))
-vectorizer = pickle.load(open("models/vectorizer3.sav", "rb"))
+model = pickle.load(open("app/models/comment_classifier3.sav", "rb"))
+vectorizer = pickle.load(open("app/models/vectorizer3.sav", "rb"))
 
 pattern = '"playabilityStatus":{"status":"ERROR","reason":"Video unavailable"'
 
