@@ -75,6 +75,8 @@ def scrape_predict(link):
         elif (val[i] == 'N'):
             neg += 1
     rat = pos/(pos + neg)
+    if (pos + neg == 0):
+        return 0
     print(rat)
     print(neg)
     return rat
