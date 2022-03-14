@@ -70,9 +70,9 @@ def scrape_predict(link):
     pos = 0
     neg = 0
     for i in range(len(val)):
-        if (val[i] == 'P'):
+        if (val[i] == 'Positive'):
             pos += 1
-        elif (val[i] == 'N'):
+        elif (val[i] == 'Negative'):
             neg += 1
     if (pos + neg == 0):
         return -1
