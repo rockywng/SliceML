@@ -18,8 +18,8 @@ import requests
 import os
 
 app = Flask(__name__)
-model = pickle.load(open("app/models/comment_classifier3.sav", "rb"))
-vectorizer = pickle.load(open("app/models/vectorizer3.sav", "rb"))
+model = pickle.load(open("app/models/comment_classifier4.sav", "rb"))
+vectorizer = pickle.load(open("app/models/vectorizer4.sav", "rb"))
 
 pattern = '"playabilityStatus":{"status":"ERROR","reason":"Video unavailable"'
 
@@ -44,9 +44,9 @@ def scrape_predict(link):
         wait = WebDriverWait(driver,15)
         driver.get(str(link))
 
-        for item in range(2): 
+        for item in range(4): 
             wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body"))).send_keys(Keys.END)
-            time.sleep(15)
+            #time.sleep(15)
 
         for comment in wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#content"))):
             data.append(comment.text)
@@ -75,7 +75,7 @@ def scrape_predict(link):
         elif (val[i] == 'N'):
             neg += 1
     if (pos + neg == 0):
-        return 0
+        return -1
     rat = pos/(pos + neg)
     print(rat)
     print(neg)
@@ -98,18 +98,11 @@ def predict():
     rat = scrape_predict(str(link))
     print("done scrape")
     #rat = scrape_predict("https://www.youtube.com/watch?v=AK3HxCOZZ6w")
-    z = zscore(0.94, 0.01666, rat)
+    if (rat == -1):
+        return render_template("index.html", prediction_text = "The model failed to identify sentiment for this video.")
     print("predictions made!")
-    if (z > 1.645):
-        return render_template("index.html", prediction_text = "The reception to this video was very positive. Its reception was in the top 5% of YouTube videos.")
-    elif (z > 0.675):
-        return render_template("index.html", prediction_text = "The reception to this video was mostly positive. Its reception was in the top 25% of YouTube videos")
-    elif (z > 0):
-        return render_template("index.html", prediction_text = "The reception to this video was neutral. Its reception was in the top 50% of YouTube videos.")
-    elif (z > -0.675):
-        return render_template("index.html", prediction_text = "The reception to this video was mostly negative. Its reception was in the bottom 25% of YouTube videos.")
-    else:
-        return render_template("index.html", prediction_text = "The reception to this video was very negative. Its reception was in the bottom 5% of YouTube videos.")
+    percent = int(rat * 100)
+    return render_template("index.html", prediction_text = "The comments on this video were " + str(percent) + "% positive.")
 
 # WORKING BASE CASE HERE!
 """ @app.route('/', methods=["GET", "POST"])
