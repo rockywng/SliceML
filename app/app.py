@@ -75,7 +75,7 @@ def scrape_predict(link):
         elif (val[i] == 'N'):
             neg += 1
     if (pos + neg == 0):
-        return 0
+        return -1
     rat = pos/(pos + neg)
     print(rat)
     print(neg)
@@ -98,7 +98,7 @@ def predict():
     rat = scrape_predict(str(link))
     print("done scrape")
     #rat = scrape_predict("https://www.youtube.com/watch?v=AK3HxCOZZ6w")
-    if (rat == 0):
+    if (rat == -1):
         return render_template("index.html", prediction_text = "The model failed to identify sentiment for this video.")
     print("predictions made!")
     percent = int(rat * 100)
