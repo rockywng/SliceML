@@ -100,6 +100,10 @@ def predict():
     #rat = scrape_predict("https://www.youtube.com/watch?v=AK3HxCOZZ6w")
     if (rat == -1):
         return render_template("index.html", prediction_text = "The model failed to identify sentiment for this video.")
+    if (rat == 1):
+        return render_template("index.html", prediction_text = "The comments on this video were almost 100% positive.")
+    if (rat == 0):
+        return render_template("index.html", prediction_text = "The comments on this video were almost 0% positive.")
     print("predictions made!")
     percent = int(rat * 100)
     return render_template("index.html", prediction_text = "The comments on this video were " + str(percent) + "% positive.")
