@@ -44,9 +44,9 @@ def scrape_predict(link):
         wait = WebDriverWait(driver,15)
         driver.get(str(link))
 
-        for item in range(2): 
+        for item in range(5): 
             wait.until(EC.visibility_of_element_located((By.TAG_NAME, "body"))).send_keys(Keys.END)
-            time.sleep(15)
+            #time.sleep(15)
 
         for comment in wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#content"))):
             data.append(comment.text)
