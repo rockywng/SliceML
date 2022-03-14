@@ -29,10 +29,10 @@ pattern = '"playabilityStatus":{"status":"ERROR","reason":"Video unavailable"'
 def validate_link(link):
     # check if link does not follow standard youtube link formatting
     if not (link[0:32] == "https://www.youtube.com/watch?v="):
-        return False         
+        return 0         
     request = requests.get(link)
     # check if the video unavailable pattern appears, if True then the link is not valid
-    return False if pattern in request.text else True
+    return -1 if pattern in request.text else 1
 
 def scrape_predict(link):
     data=[]
@@ -97,8 +97,11 @@ def home():
 def predict():
     link = request.form['entry']
     # inform user if link is not valid
-    if not (validate_link(link)):
+    validity = validate_link(link)
+    if (validity == 0):
         return render_template("index.html", prediction_text = 'Please enter a valid video link of the form https://www.youtube.com/watch?v=VIDEOID')
+    if (validity == -1):
+        return render_template("index.html", prediction_text = 'The video does not appear to exist. Please enter the link to a valid video.')
     # make predictions if link is valid
     rat = scrape_predict(str(link))
     # handle edge cases (-1, 0, 1)
