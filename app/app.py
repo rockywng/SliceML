@@ -98,18 +98,11 @@ def predict():
     rat = scrape_predict(str(link))
     print("done scrape")
     #rat = scrape_predict("https://www.youtube.com/watch?v=AK3HxCOZZ6w")
-    z = zscore(0.94, 0.01666, rat)
+    if (rat == 0):
+        return render_template("index.html", prediction_text = "The model failed to identify sentiment for this video.")
     print("predictions made!")
-    if (z > 1.645):
-        return render_template("index.html", prediction_text = "The reception to this video was very positive. Its reception was in the top 5% of YouTube videos.")
-    elif (z > 0.675):
-        return render_template("index.html", prediction_text = "The reception to this video was mostly positive. Its reception was in the top 25% of YouTube videos")
-    elif (z > 0):
-        return render_template("index.html", prediction_text = "The reception to this video was neutral. Its reception was in the top 50% of YouTube videos.")
-    elif (z > -0.675):
-        return render_template("index.html", prediction_text = "The reception to this video was mostly negative. Its reception was in the bottom 25% of YouTube videos.")
-    else:
-        return render_template("index.html", prediction_text = "The reception to this video was very negative. Its reception was in the bottom 5% of YouTube videos.")
+    percent = int(rat * 100)
+    return render_template("index.html", prediction_text = "The comments on this video were " + str(percent) + "% positive.")
 
 # WORKING BASE CASE HERE!
 """ @app.route('/', methods=["GET", "POST"])
